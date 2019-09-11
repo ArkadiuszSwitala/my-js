@@ -20,22 +20,23 @@
 
     <button onclick="toggleOpen()">open</button>
 
-    <h3>tests</h3>
+    <h3>Tests</h3>
 </div>
 <script>
     let data = new Data({
         header: "<span style='color: red'>Default header</span>",
         paragraph: "Default paragraph",
         input: 34,
-        isOpen: false
+        isOpen: false,
+        test: false
     })
 
     function dataUpdate(prop) {
-        data[`_${prop}`] = data[prop] + 1
+        data[prop] = data[prop] + 2
     }
 
     function toggleOpen() {
-        data._isOpen = !data.isOpen
+        data.isOpen = !data.isOpen
     }
 
 </script>
