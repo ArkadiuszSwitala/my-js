@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>Tests</title>
+</head>
+<body>
+<script>
+    let flag = false
+    var promise1 = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve('1. ok');
+        }, 1000);
+    });
+
+    var promise2 = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve('2. ok');
+        }, 1500);
+    });
+    var promise3 = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve('3. ok');
+        }, 2000);
+    });
+
+    promise1
+            .then(function (value) {
+                console.log(value);
+                if (flag) {
+                    return promise2
+                } else {
+                    return new Promise(resolve => resolve('2.1 ok'))
+                }
+            })
+            .then(function (value) {
+                console.log(value)
+                return promise3
+            })
+            .then(function (value) {
+                console.log(value)
+            })
+            .catch(function () {
+                console.log("Error...")
+            });
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<html>
+<head>
+    <title>Tests</title>
+    <link rel="stylesheet" href="css/main.css"/>
+    <script type="text/javascript" src="./js/binding.js"></script>
+</head>
+<body>
+<div id="app">
+    <h2 class="header" data-bind="innerHTML: header" class-bind="is-open: isOpen"></h2>
+    <h3 class="header" data-bind="innerHTML: header"></h3>
+    <button onclick="dataUpdate('header')">mod header</button>
+
+    <div class="nav" class-bind="is-open: isOpen">
+        <p data-bind="innerText: paragraph"></p>
+        <button onclick="dataUpdate('paragraph')">mode parag</button>
+        <br><br>
+        <input data-bind="value: input" name="text"/>
+        <button onclick="dataUpdate('input')">mod input</button>
+    </div>
+
+    <button onclick="toggleOpen()">open</button>
+
+    <h3>tests</h3>
+</div>
+<script>
+    let data = new Data({
+        header: "<span style='color: red'>Default header</span>",
+        paragraph: "Default paragraph",
+        input: 34,
+        isOpen: false
+    })
+
+    function dataUpdate(prop) {
+        data[`_${prop}`] = data[prop] + 1
+    }
+
+    function toggleOpen() {
+        data._isOpen = !data.isOpen
+    }
+
+</script>
+</body>
+</html>
