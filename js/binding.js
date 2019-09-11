@@ -1,39 +1,63 @@
 function Data(dataObj) {
+    this.dataObject = dataObj
+    this.dataElements = {}
+    this.classElements = {}
+
     let allElements = document.querySelectorAll('*')
-    let dataElements = {},
-            classElements = {}
+
     allElements.forEach(element => {
-        if (element.hasAttribute('data-bind')) {
-            let attValue = element.getAttribute('data-bind')
-            let keyValueArr = attValue.split(':').map(item => item.trim())
+
+        this.getElementsByAttribute(element, 'data-bind', this.dataElements);
+        this.getElementsByAttribute(element, 'class-bind', this.classElements);
+
+        // if (element.hasAttribute('data-bind')) {
+        //     let attValue = element.getAttribute('data-bind')
+        //     let keyValueArr = attValue.split(':').map(item => item.trim())
+        //     if (!dataObj.hasOwnProperty(keyValueArr[1])) {
+        //         return
+        //     }
+        //
+        //     if (!dataElements.hasOwnProperty(keyValueArr[1])) {
+        //         dataElements[keyValueArr[1]] = []
+        //     }
+        //     dataElements[keyValueArr[1]].push({
+        //         element: element,
+        //         property: keyValueArr[0]
+        //     })
+        // }
+        //
+        // if (element.hasAttribute('class-bind')) {
+        //     let attValue = element.getAttribute('class-bind')
+        //     let keyValueArr = attValue.split(':').map(item => item.trim())
+        //     if (!dataObj.hasOwnProperty(keyValueArr[1])) {
+        //         return
+        //     }
+        //     if (!this.classElements.hasOwnProperty(keyValueArr[1])) {
+        //         classElements[keyValueArr[1]] = []
+        //     }
+        //     classElements[keyValueArr[1]].push({
+        //         element: element,
+        //         className: keyValueArr[0]
+        //     })
+        // }
+    });
+
+    this.getElementsByAttribute = function (element, attribute, targetObject) {
+        if (element.hasAttribute(attribute)) {
+            let keyValueArr = element.getAttribute(attribute).split(':').map(item => item.trim())
             if (!dataObj.hasOwnProperty(keyValueArr[1])) {
                 return
             }
 
-            if (!dataElements.hasOwnProperty(keyValueArr[1])) {
-                dataElements[keyValueArr[1]] = []
+            if (!targetObject.hasOwnProperty(keyValueArr[1])) {
+                targetObject[keyValueArr[1]] = []
             }
-            dataElements[keyValueArr[1]].push({
+            targetObject[keyValueArr[1]].push({
                 element: element,
                 property: keyValueArr[0]
             })
         }
-
-        if (element.hasAttribute('class-bind')) {
-            let attValue = element.getAttribute('class-bind')
-            let keyValueArr = attValue.split(':').map(item => item.trim())
-            if (!dataObj.hasOwnProperty(keyValueArr[1])) {
-                return
-            }
-            if (!classElements.hasOwnProperty(keyValueArr[1])) {
-                classElements[keyValueArr[1]] = []
-            }
-            classElements[keyValueArr[1]].push({
-                element: element,
-                className: keyValueArr[0]
-            })
-        }
-    });
+    }
 
     console.log("Data elements: ", dataElements)
     console.log("Class elements: ", classElements)
@@ -42,7 +66,6 @@ function Data(dataObj) {
         if (dataObj.hasOwnProperty(key)) {
             if (dataElements.hasOwnProperty(key)) {
                 for (let item in dataElements[key]) {
-                    console.log(dataElements[key][item].element)
                     dataElements[key][item].element[dataElements[key][item].property] = dataObj[key]
                 }
             }
@@ -57,7 +80,6 @@ function Data(dataObj) {
                     dataObj[key] = v
                     if (dataElements.hasOwnProperty(key)) {
                         for (let item in dataElements[key]) {
-                            console.log(dataElements[key][item].element)
                             dataElements[key][item].element[dataElements[key][item].property] = dataObj[key]
                         }
                     }
