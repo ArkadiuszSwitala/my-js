@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Html features tests</title>
+</head>
+<body>
+<style>
+    #sprite {
+        display: block;
+        width: 15px;
+        height: 15px;
+        background: #334477;
+        border-radius: 15px;
+        transition: transform .1s;
+    }
+</style>
+<div>x: <span id="x"></span></div>
+<div>y: <span id="y"></span></div>
+<div>
+    <div id="sprite"></div>
+</div>
+<script>
+    (function () {
+            let
+                x = 0,
+                y = 0,
+                directionX = 0,
+                directionY = 0,
+                xEl = document.getElementById('x'),
+                yEl = document.getElementById('y'),
+                sprite = document.getElementById('sprite'),
+                speed = 10,
+                map = [];
+            xEl.innerText = x
+            yEl.innerText = y
+
+            window.addEventListener('keypress', onkey)
+            window.addEventListener('keyup', onkey)
+
+            function onkey(e) {
+                if (e.type === 'keypress') {
+                    if (!map.includes(e.key)) {
+                        map.push(e.key)
+                    }
+                } else {
+                    if (map.includes(e.key)) {
+                        map.splice(map.indexOf(e.key))
+                    }
+                }
+
+                map.forEach(item => {
+                    if (item === 'a') {
+                        directionX -= 10
+                    }
+                    if (item === 'd') {
+                        directionX += 10
+                    }
+                    if (item === 'w') {
+                        directionY -= 10
+                    }
+                    if (item === 's') {
+                        directionY += 10
+                    }
+                })
+
+                xEl.innerText = directionX
+                yEl.innerText = directionY
+                sprite.style.transform = `translate(${directionX}px, ${directionY}px)`
+                console.log(map)
+
+            }
+        }
+    )()
+</script>
+</body>
+</html>

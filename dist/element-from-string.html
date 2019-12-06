@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>Create element</title>
+    <link rel="stylesheet" href="main.css"/>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    let newNode = document.createElement("div");
+    newNode.innerHTML = '<h2>Tytuł</h2><p>Pierwszy paragraf</p><h3>Jakaś h3-ójka</h3><p>znowu paragraf</p>'
+    let header = newNode.children[0];
+    header.classList.add('header');
+
+    let contentEl = document.createElement("div");
+    contentEl.classList.add("content");
+
+    let content = Array.prototype.slice.call(newNode.children);
+    content.forEach(function (element) {
+        contentEl.appendChild(element);
+    })
+
+    let root = document.getElementById('container');
+    root.appendChild(header);
+    root.appendChild(contentEl);
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQuery test</title>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+</head>
+<body>
+<style>
+    .active {
+        color: limegreen;
+    }
+</style>
+<p id="paragraph1">test</p>
+<p class="paragraph">test2</p>
+<p name="parag">test3</p>
+<script>
+    $(function () {
+        let elements = [
+            '#paragraph1',
+            '.paragraph',
+            "[name='parag']"
+        ];
+        for (var i = 0; i < elements.length; i++) {
+            setTimeout(function () {
+                $(elements[i]).addClass('active');
+            }, i * 1000)
+        }
+        for (var j = 0; j < 10; j++) {
+            setTimeout(function () {
+                console.log(j)
+                $(elements[i]).addClass('active');
+            }, j * 1000)
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>JQuery tests</title>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+</head>
+<body>
+<h3>Jquery</h3>
+<div name="inputField.text">
+    <input name="telephone" placeholder="telefon: ">
+</div>
+
+<script>
+    let app = {
+        test: function () {
+            console.log('test function');
+        },
+        setElementObserver: function () {
+            let target = document.body;
+            let observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    mutation.addedNodes.forEach(function (node) {
+                        if (node.getAttribute("name") === "demoName") {
+                            app.test();
+                        }
+                    })
+                    observer.disconnect();
+                });
+            });
+            let config = {attributes: true, childList: true, characterData: true}
+            observer.observe(target, config);
+        },
+
+        phoneFormat: function (element) {
+            console.log(element)
+            let value = $(element).val(),
+                    phone = '';
+
+            if ((value.length > 0) && !(value.charAt(0) === '+')) {
+                phone += "+48";
+            }
+
+            phone += value;
+            phone = phone.replace(/[^0-9+]/g, '');
+            phone = phone.replace(/(\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
+            $(element).val(phone);
+        },
+
+        validatePhone: function () {
+            $("[name='inputField.text'] input").focusout(function () {
+                app.phoneFormat(this);
+            });
+        }
+    }
+
+
+    $(document).ready(function () {
+        app.validatePhone();
+        app.setElementObserver();
+        setTimeout(function () {
+            let newDiv = document.createElement("div");
+            newDiv.innerHTML = "<h4>new element</h4>";
+            newDiv.setAttribute("name", "demoName");
+            document.body.appendChild(newDiv);
+        }, 2000);
+    });
+</script>
+</body>
+</html>

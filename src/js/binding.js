@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import Data from './data'
+import Data from './vendors/data'
 
 export default function() {
     function component() {

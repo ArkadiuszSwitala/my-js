@@ -1,0 +1,41 @@
+<html>
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+<body>
+<h2>test</h2>
+<form id="frm_details" name="frm_details">
+    <input name="nip"/>
+    <button type="submit">Wyślij</button>
+</form>
+<script>
+    $(document).ready(function () {
+        $("#frm_details").on("submit", function (event) {
+            event.preventDefault();
+
+            var formData = {
+                'data': {
+                    'nip': $('input[name=nip]').val()
+                }
+            };
+
+            $.ajax({
+                url: "http://localhost/makro-gus-api/",
+                type: "post",
+                data: formData,
+                success: function (response) {
+                    console.log("response: ", response)
+                },
+                error: function (error) {
+                    console.log("error: ", error)
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

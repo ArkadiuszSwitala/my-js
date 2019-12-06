@@ -11,9 +11,14 @@
         }, 1000);
     });
 
-    var promise2 = new Promise(function (resolve, reject) {
+    var promise2 = new Promise(function (isOk, notOK) {
+        let v = Math.random() * 12
         setTimeout(function () {
-            resolve('2. ok');
+            if (v > 8) {
+                isOk("is ok: " + v)
+            } else {
+                notOK("not ok: " + v)
+            }
         }, 1500);
     });
     var promise3 = new Promise(function (resolve, reject) {
@@ -25,11 +30,7 @@
     promise1
             .then(function (value) {
                 console.log(value);
-                if (flag) {
-                    return promise2
-                } else {
-                    return new Promise(resolve => resolve('2.1 ok'))
-                }
+                return promise2
             })
             .then(function (value) {
                 console.log(value)
@@ -38,8 +39,8 @@
             .then(function (value) {
                 console.log(value)
             })
-            .catch(function () {
-                console.log("Error...")
+            .catch(function (e) {
+                console.log("Error...:", e)
             });
 </script>
 </body>
